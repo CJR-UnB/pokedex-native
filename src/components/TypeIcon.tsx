@@ -1,10 +1,11 @@
-import React from 'react';
-import { Image, StyleSheet } from 'react-native';
-import { Sizing } from '../styles';
+import React from "react";
+import { Image, StyleSheet } from "react-native";
+import { Sizing } from "../styles";
 
 type TypeIconProps = {
   type: string;
-}
+  size?: "normal" | "big";
+};
 
 const types: { [key: string]: any } = {
   bug: require("../../assets/type-icons/bug-kind-icon.png"),
@@ -26,8 +27,8 @@ const types: { [key: string]: any } = {
   water: require("../../assets/type-icons/water-kind-icon.png"),
 };
 
-export default function TypeIcon({ type }: TypeIconProps) {
-  return <Image style={styles.icon} source={types[type]}/>
+export default function TypeIcon({ type, size }: TypeIconProps) {
+  return <Image style={size === "big" ? styles.iconBig : styles.icon} source={types[type]} />;
 }
 
 const styles = StyleSheet.create({
@@ -35,5 +36,10 @@ const styles = StyleSheet.create({
     height: Sizing.x40,
     width: Sizing.x40,
     marginHorizontal: Sizing.x05,
-  }
-})
+  },
+  iconBig: {
+    height: Sizing.x60,
+    width: Sizing.x60,
+    marginHorizontal: Sizing.x05,
+  },
+});

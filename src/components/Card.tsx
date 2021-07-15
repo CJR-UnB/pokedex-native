@@ -1,22 +1,25 @@
 import React from "react";
 import { Image, Text, View, StyleSheet } from "react-native";
+import { BaseButton, BaseButtonProps } from "react-native-gesture-handler";
 import { Colors, Sizing } from "../styles";
 import TypeIcon from "./TypeIcon";
 
 type CardProps = {
   pokemon: Pokemon;
-};
+} & BaseButtonProps;
 
-export default function Card({ pokemon }: CardProps) {
+export default function Card({ pokemon, onPress }: CardProps) {
   return (
-    <View style={styles.container}>
+    <BaseButton style={styles.container} onPress={onPress}>
       <Text style={styles.name}>{pokemon.name}</Text>
       <Text style={styles.number}>#{pokemon.number}</Text>
       <Image style={styles.image} source={{ uri: pokemon.image_url }} />
       <View style={styles.types}>
-        {pokemon.kind.split(';').map(type => <TypeIcon key={type} type={type} />)}
+        {pokemon.kind.split(";").map((type) => (
+          <TypeIcon key={type} type={type} />
+        ))}
       </View>
-    </View>
+    </BaseButton>
   );
 }
 
@@ -56,6 +59,6 @@ const styles = StyleSheet.create({
   },
   types: {
     flexDirection: "row",
-    justifyContent: "center"
-  }
+    justifyContent: "center",
+  },
 });

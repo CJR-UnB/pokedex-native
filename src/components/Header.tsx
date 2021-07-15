@@ -1,11 +1,14 @@
-import React from 'react';
-import { StyleSheet, View, Text, Pressable } from 'react-native';
-import { MaterialTopTabBarProps} from '@react-navigation/material-top-tabs';
-import { Colors, Sizing } from '../styles';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { BorderlessButton } from 'react-native-gesture-handler';
+import React, { useState } from "react";
+import { StyleSheet, View, Text, Pressable } from "react-native";
+import { MaterialTopTabBarProps } from "@react-navigation/material-top-tabs";
+import { Colors, Sizing } from "../styles";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import ModalView from "./ModalView";
+import LogoutModal from "./LogoutModal";
 
-export default function Header({ state, navigation}: MaterialTopTabBarProps) {
+export default function Header({ state, navigation }: MaterialTopTabBarProps) {
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <View style={styles.container}>
       <View style={styles.options}>
@@ -16,13 +19,12 @@ export default function Header({ state, navigation}: MaterialTopTabBarProps) {
           <Text style={[styles.text, state.index === 1 ? styles.selected : null]}>Favoritos</Text>
         </Pressable>
       </View>
-      <BorderlessButton>
-        <MaterialCommunityIcons
-          name="logout"
-          size={24}
-          color={Colors.gray100}
-        />
-      </BorderlessButton>
+      <Pressable onPress={() => setShowModal(true)}>
+        <MaterialCommunityIcons name="logout" size={24} color={Colors.gray100} />
+      </Pressable>
+      <ModalView visible={showModal} closeModal={() => setShowModal(false)}>
+        <LogoutModal onDismiss={() => setShowModal(false)} />
+      </ModalView>
     </View>
   );
 }

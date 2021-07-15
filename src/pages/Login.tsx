@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { SafeAreaView, View, Image, Text, TextInput, StyleSheet } from 'react-native';
+import React, { useState } from "react";
+import { SafeAreaView, View, Image, Text, TextInput, StyleSheet } from "react-native";
 
-import Button from '../components/Button';
-import LinkButton from '../components/LinkButton';
-import { useUser } from '../context/UserContext';
-import api from '../services/api';
-import { Colors, Sizing } from '../styles';
+import Button from "../components/Button";
+import LinkButton from "../components/LinkButton";
+import { useUser } from "../context/UserContext";
+import api from "../services/api";
+import { Colors, Sizing } from "../styles";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -14,15 +14,21 @@ export default function Login() {
   const { setUser } = useUser();
 
   const handleLogin = () => {
-    api.get(`users/${username}`).then((response) => {
-      setUser(response.data);
-    }).catch(() => setError("Esse usuário não existe"));
-  }
+    api
+      .get(`users/${username}`)
+      .then((response) => {
+        setUser(response.data);
+      })
+      .catch(() => setError("Esse usuário não existe"));
+  };
 
   return (
     <SafeAreaView style={styles.layout}>
       <View style={styles.container}>
-        <Image style={styles.image} source={require('../../assets/illustrations/login-illustration.png')}/>
+        <Image
+          style={styles.image}
+          source={require("../../assets/illustrations/login-illustration.png")}
+        />
       </View>
       <Text style={styles.title}>
         Explore e descubra{"\n"} o maravilhoso{"\n"} mundo Pokémon
@@ -35,9 +41,7 @@ export default function Login() {
         placeholder="Nome do treinador"
       />
       {!!error && <Text style={styles.errorMessage}>{error}</Text>}
-      <Button onPress={handleLogin}>
-        <Text style={styles.buttonText}>Entrar</Text>
-      </Button>
+      <Button style={styles.button} text="Entrar" onPress={handleLogin}></Button>
       <LinkButton text="Criar conta" />
     </SafeAreaView>
   );
@@ -90,5 +94,9 @@ const styles = StyleSheet.create({
     fontFamily: "Barlow_600SemiBold",
     color: Colors.white,
     fontSize: 18,
+  },
+  button: {
+    marginTop: Sizing.x30,
+    marginBottom: Sizing.x50,
   },
 });
